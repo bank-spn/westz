@@ -13,6 +13,7 @@ import {
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { format } from "date-fns";
 import { trpc } from "@/lib/trpc";
+import { getStatusColor } from "@/lib/statusColors";
 
 interface ParcelCardProps {
   parcel: Parcel;
@@ -46,8 +47,10 @@ export default function ParcelCard({
     setIsOpen(open);
   };
 
+  const statusColors = getStatusColor(parcel.currentStatus);
+
   return (
-    <Card className="bg-white border-gray-300">
+    <Card className={`bg-white border-gray-300 border-l-4 ${statusColors.border} overflow-hidden`}>
       <Collapsible open={isOpen} onOpenChange={handleToggle}>
         <CollapsibleTrigger asChild>
           <div className="w-full cursor-pointer">
@@ -87,10 +90,10 @@ export default function ParcelCard({
 
               {/* Right side */}
               <div className="flex flex-col items-end gap-2">
-                {parcel.isDelivered ? (
-                  <Badge className="bg-primary text-primary-foreground">Delivered</Badge>
-                ) : (
-                  <Badge variant="outline">In Transit</Badge>
+                {parcel.currentStatus && (
+                  <Badge className={`${statusColors.badge} px-3 py-1 text-xs font-medium`}>
+                    {parcel.currentStatus}
+                  </Badge>
                 )}
 
                 <DropdownMenu>

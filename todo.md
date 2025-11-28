@@ -73,3 +73,8 @@
 ## UI Improvements
 - [x] แก้ไขรูปแบบวันที่เป็น MM/DD/YYYY ตาม API Response
 - [x] เพิ่มการแสดง CURRENT STATUS ใน ParcelCard (Dashboard และ Parcels)
+
+## UI Redesign
+- [x] เพิ่มแถบสีด้านซ้ายของ ParcelCard ตาม status
+- [x] ปรับ Status Badge ให้มีสีพื้นหลังตาม status description
+- [x] ปรับรูปแบบการแสดงข้อมูลให้ตรงตามภาพตัวอย่าง
