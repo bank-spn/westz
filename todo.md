@@ -78,3 +78,9 @@
 - [x] เพิ่มแถบสีด้านซ้ายของ ParcelCard ตาม status
 - [x] ปรับ Status Badge ให้มีสีพื้นหลังตาม status description
 - [x] ปรับรูปแบบการแสดงข้อมูลให้ตรงตามภาพตัวอย่าง
+
+## ParcelCard Layout Refinement
+- [x] เพิ่ม dateSent และ note fields ใน database schema (มีอยู่แล้ว)
+- [x] อัปเดต tRPC procedures ให้รองรับ fields ใหม่ (มีอยู่แล้ว)
+- [x] ปรับ ParcelCard layout ตามโครงสร้างที่กำหนด
+- [x] อัปเดต Parcels form ให้มี Date Send และ Note inputs (มีอยู่แล้ว)

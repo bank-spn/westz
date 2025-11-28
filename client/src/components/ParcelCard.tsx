@@ -57,35 +57,47 @@ export default function ParcelCard({
             <CardContent className="p-4">
             <div className="flex items-start justify-between gap-4">
               {/* Left side */}
-              <div className="flex-1 text-left">
-                <div className="font-semibold text-lg mb-1">{parcel.trackingNumber}</div>
-                <div className="text-sm text-gray-600 mb-2">
+              <div className="flex-1 text-left space-y-2">
+                {/* 1. Tracking Number */}
+                <div className="font-bold text-lg">{parcel.trackingNumber}</div>
+                
+                {/* 2. Name / Destination / Date Send / Note */}
+                <div className="text-sm text-gray-700 space-y-0.5">
                   {parcel.recipientName && <div>{parcel.recipientName}</div>}
                   {parcel.destination && <div>{parcel.destination}</div>}
+                  {parcel.dateSent && (() => {
+                    const date = new Date(parcel.dateSent);
+                    return !isNaN(date.getTime()) ? (
+                      <div className="text-gray-500">Sent: {format(date, "MM/dd/yyyy")}</div>
+                    ) : null;
+                  })()}
+                  {parcel.note && <div className="text-gray-500 italic">{parcel.note}</div>}
                 </div>
+
+                {/* 3. Current Status / Status Description */}
                 {parcel.currentStatus && (
-                  <div className="text-sm mb-1">
-                    <span className="font-medium">Current Status:</span> <span className="text-primary font-semibold">{parcel.currentStatus}</span>
+                  <div className="text-sm">
+                    <span className="font-semibold text-primary">{parcel.currentStatus}</span>
+                    {parcel.currentStatusDescription && (
+                      <span className="text-gray-600"> - {parcel.currentStatusDescription}</span>
+                    )}
                   </div>
                 )}
-                {parcel.currentStatusDescription && (
-                  <div className="text-sm text-gray-600 mb-1">
-                    {parcel.currentStatusDescription}
-                  </div>
-                )}
-                {parcel.currentLocation && (
-                  <div className="text-sm text-gray-600 mb-1">
-                    <span className="font-medium">Location:</span> {parcel.currentLocation}
-                  </div>
-                )}
-                {parcel.lastUpdated && (() => {
-                  const date = new Date(parcel.lastUpdated);
-                  return !isNaN(date.getTime()) ? (
-                    <div className="text-xs text-gray-500">
-                      Last update: {format(date, "MM/dd/yyyy | HH:mm")}
+
+                {/* 4. Location / Date Update */}
+                <div className="text-xs text-gray-500 space-y-0.5">
+                  {parcel.currentLocation && (
+                    <div>
+                      <span className="font-medium">Location:</span> {parcel.currentLocation}
                     </div>
-                  ) : null;
-                })()}
+                  )}
+                  {parcel.lastUpdated && (() => {
+                    const date = new Date(parcel.lastUpdated);
+                    return !isNaN(date.getTime()) ? (
+                      <div>Last update: {format(date, "MM/dd/yyyy | HH:mm")}</div>
+                    ) : null;
+                  })()}
+                </div>
               </div>
 
               {/* Right side */}
