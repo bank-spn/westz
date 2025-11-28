@@ -69,3 +69,7 @@
 
 ## Bug Fixes (Round 3)
 - [x] แก้ไข Invalid time value error ใน ParcelCard component
+
+## UI Improvements
+- [x] แก้ไขรูปแบบวันที่เป็น MM/DD/YYYY ตาม API Response
+- [x] เพิ่มการแสดง CURRENT STATUS ใน ParcelCard (Dashboard และ Parcels)

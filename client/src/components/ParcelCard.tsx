@@ -60,9 +60,14 @@ export default function ParcelCard({
                   {parcel.recipientName && <div>{parcel.recipientName}</div>}
                   {parcel.destination && <div>{parcel.destination}</div>}
                 </div>
-                {parcel.currentStatusDescription && (
+                {parcel.currentStatus && (
                   <div className="text-sm mb-1">
-                    <span className="font-medium">Status:</span> {parcel.currentStatusDescription}
+                    <span className="font-medium">Current Status:</span> <span className="text-primary font-semibold">{parcel.currentStatus}</span>
+                  </div>
+                )}
+                {parcel.currentStatusDescription && (
+                  <div className="text-sm text-gray-600 mb-1">
+                    {parcel.currentStatusDescription}
                   </div>
                 )}
                 {parcel.currentLocation && (
@@ -74,7 +79,7 @@ export default function ParcelCard({
                   const date = new Date(parcel.lastUpdated);
                   return !isNaN(date.getTime()) ? (
                     <div className="text-xs text-gray-500">
-                      Last update: {format(date, "dd/MM/yyyy | HH:mm")}
+                      Last update: {format(date, "MM/dd/yyyy | HH:mm")}
                     </div>
                   ) : null;
                 })()}
@@ -172,7 +177,7 @@ export default function ParcelCard({
                           <div className="text-xs text-gray-500 mt-1">
                             {(() => {
                               const date = new Date(item.status_date);
-                              return !isNaN(date.getTime()) ? format(date, "dd/MM/yyyy HH:mm") : 'Invalid date';
+                              return !isNaN(date.getTime()) ? format(date, "MM/dd/yyyy HH:mm") : 'Invalid date';
                             })()}
                           </div>
                           {item.status_detail && (
