@@ -60,3 +60,9 @@
 - [x] สร้าง netlify.toml
 - [x] สร้าง vercel.json
 - [x] Push to GitHub repository
+
+## Bug Fixes (Round 2)
+- [x] แก้ไข Settings query error - เพิ่ม settings router
+- [x] แก้ไข Invalid time value error
+- [x] ลบ Supabase code ที่ไม่ได้ใช้ออกจาก Dashboard
+- [ ] แก้ไข Thailand Post API 403 error (ต้องอัปเดต token ใน Settings)

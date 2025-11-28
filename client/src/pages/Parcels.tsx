@@ -74,10 +74,13 @@ export default function Parcels() {
     try {
       // Validate and convert date
       let dateSent: Date | undefined = undefined;
-      if (formData.dateSent) {
+      if (formData.dateSent && formData.dateSent.trim() !== "") {
         const dateValue = new Date(formData.dateSent);
         if (!isNaN(dateValue.getTime())) {
           dateSent = dateValue;
+        } else {
+          toast.error("Invalid date format");
+          return;
         }
       }
 

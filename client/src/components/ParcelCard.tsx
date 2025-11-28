@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { type Parcel, fetchTrackingHistory } from "@/lib/supabase";
+import { Parcel } from "../../../drizzle/schema";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,12 +12,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { format } from "date-fns";
+import { trpc } from "@/lib/trpc";
 
 interface ParcelCardProps {
   parcel: Parcel;
-  onRefresh?: (id: string) => void;
+  onRefresh?: (id: number) => void;
   onEdit?: (parcel: Parcel) => void;
-  onDelete?: (id: string) => void;
+  onDelete?: (id: number) => void;
 }
 
 export default function ParcelCard({
@@ -27,26 +28,19 @@ export default function ParcelCard({
   onDelete,
 }: ParcelCardProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [trackingHistory, setTrackingHistory] = useState<any[]>([]);
-  const [isLoadingHistory, setIsLoadingHistory] = useState(false);
+  const [shouldFetch, setShouldFetch] = useState(false);
 
+  const { data: trackingHistory, isLoading: isLoadingHistory } = trpc.parcels.getTrackingHistory.useQuery(
+    { trackingNumber: parcel.trackingNumber },
+    { enabled: shouldFetch }
+  );
+
+  // Fetch tracking history when card is opened
   useEffect(() => {
-    if (isOpen && trackingHistory.length === 0) {
-      loadTrackingHistory();
+    if (isOpen && !shouldFetch) {
+      setShouldFetch(true);
     }
-  }, [isOpen]);
-
-  const loadTrackingHistory = async () => {
-    setIsLoadingHistory(true);
-    try {
-      const history = await fetchTrackingHistory(parcel.tracking_number);
-      setTrackingHistory(history || []);
-    } catch (error) {
-      console.error('Error loading tracking history:', error);
-    } finally {
-      setIsLoadingHistory(false);
-    }
-  };
+  }, [isOpen, shouldFetch]);
 
   const handleToggle = (open: boolean) => {
     setIsOpen(open);
@@ -61,31 +55,31 @@ export default function ParcelCard({
             <div className="flex items-start justify-between gap-4">
               {/* Left side */}
               <div className="flex-1 text-left">
-                <div className="font-semibold text-lg mb-1">{parcel.tracking_number}</div>
+                <div className="font-semibold text-lg mb-1">{parcel.trackingNumber}</div>
                 <div className="text-sm text-gray-600 mb-2">
-                  {parcel.recipient_name && <div>{parcel.recipient_name}</div>}
+                  {parcel.recipientName && <div>{parcel.recipientName}</div>}
                   {parcel.destination && <div>{parcel.destination}</div>}
                 </div>
-                {parcel.current_status_description && (
+                {parcel.currentStatusDescription && (
                   <div className="text-sm mb-1">
-                    <span className="font-medium">Status:</span> {parcel.current_status_description}
+                    <span className="font-medium">Status:</span> {parcel.currentStatusDescription}
                   </div>
                 )}
-                {parcel.current_location && (
+                {parcel.currentLocation && (
                   <div className="text-sm text-gray-600 mb-1">
-                    <span className="font-medium">Location:</span> {parcel.current_location}
+                    <span className="font-medium">Location:</span> {parcel.currentLocation}
                   </div>
                 )}
-                {parcel.last_updated && (
+                {parcel.lastUpdated && (
                   <div className="text-xs text-gray-500">
-                    Last update: {format(new Date(parcel.last_updated), "dd/MM/yyyy | HH:mm")}
+                    Last update: {format(new Date(parcel.lastUpdated), "dd/MM/yyyy | HH:mm")}
                   </div>
                 )}
               </div>
 
               {/* Right side */}
               <div className="flex flex-col items-end gap-2">
-                {parcel.is_delivered ? (
+                {parcel.isDelivered ? (
                   <Badge className="bg-primary text-primary-foreground">Delivered</Badge>
                 ) : (
                   <Badge variant="outline">In Transit</Badge>
@@ -156,7 +150,7 @@ export default function ParcelCard({
                   {trackingHistory
                     .slice()
                     .reverse()
-                    .map((item: any, index: number) => {
+                    .map((item, index) => {
                       const isLatest = index === 0;
                       return (
                         <div

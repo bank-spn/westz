@@ -250,10 +250,37 @@ export async function deleteWeeklyPlan(id: number, userId: number) {
 // Settings helpers
 export async function getUserSettings(userId: number) {
   const db = await getDb();
-  if (!db) return undefined;
+  if (!db) {
+    // Return default settings if database is not available
+    return {
+      id: 0,
+      userId,
+      thailandPostApiToken: null,
+      supabaseUrl: null,
+      supabaseAnonKey: null,
+      notificationsEnabled: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+  }
   
   const result = await db.select().from(settings).where(eq(settings.userId, userId)).limit(1);
-  return result.length > 0 ? result[0] : undefined;
+  
+  // Return default settings if no settings found
+  if (result.length === 0) {
+    return {
+      id: 0,
+      userId,
+      thailandPostApiToken: null,
+      supabaseUrl: null,
+      supabaseAnonKey: null,
+      notificationsEnabled: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+  }
+  
+  return result[0];
 }
 
 export async function upsertSettings(userId: number, data: Partial<InsertSettings>) {
