@@ -84,3 +84,11 @@
 - [x] อัปเดต tRPC procedures ให้รองรับ fields ใหม่ (มีอยู่แล้ว)
 - [x] ปรับ ParcelCard layout ตามโครงสร้างที่กำหนด
 - [x] อัปเดต Parcels form ให้มี Date Send และ Note inputs (มีอยู่แล้ว)
+
+## Remove Auth & Prepare Production
+- [ ] เปลี่ยน protectedProcedure เป็น publicProcedure
+- [ ] สร้าง mock user สำหรับทุก request
+- [ ] ลบ login/logout UI
+- [ ] ตรวจสอบระบบทั้งหมดไม่มี errors
+- [ ] อัปเดต deployment configs
+- [ ] Push to GitHub
