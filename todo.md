@@ -36,3 +36,27 @@
 
 ## Feature Improvements
 - [x] ปรับปรุง ParcelCard ให้แสดงประวัติการจัดส่งอัตโนมัติเมื่อคลิก
+
+## Major Refactoring
+- [ ] ลบระบบ Manus Auth ออกทั้งหมด
+- [ ] สร้าง Supabase Schema และ SQL
+- [ ] สร้าง Supabase Policies
+- [ ] Enable Supabase Realtime
+- [ ] สร้าง Supabase Edge Functions
+- [ ] สร้าง Supabase Triggers
+- [ ] ติดตั้ง Supabase Client ใน Frontend
+- [ ] เตรียมไฟล์ Deploy สำหรับ Netlify
+- [ ] เตรียมไฟล์ Deploy สำหรับ Vercel
+- [ ] Push to GitHub repository
+
+## Refactor to Static + Supabase
+- [ ] ติดตั้ง @supabase/supabase-js
+- [ ] สร้าง Supabase Schema SQL
+- [ ] สร้าง Supabase Policies
+- [ ] สร้าง Supabase helpers แทน tRPC
+- [ ] ปรับ Frontend ให้ใช้ Supabase
+- [ ] ลบ authentication checks
+- [ ] เพิ่ม Realtime subscriptions
+- [ ] สร้าง netlify.toml
+- [ ] สร้าง vercel.json
+- [ ] Push to GitHub repository
