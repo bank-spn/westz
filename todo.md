@@ -50,13 +50,13 @@
 - [ ] Push to GitHub repository
 
 ## Refactor to Static + Supabase
-- [ ] ติดตั้ง @supabase/supabase-js
-- [ ] สร้าง Supabase Schema SQL
-- [ ] สร้าง Supabase Policies
-- [ ] สร้าง Supabase helpers แทน tRPC
-- [ ] ปรับ Frontend ให้ใช้ Supabase
-- [ ] ลบ authentication checks
-- [ ] เพิ่ม Realtime subscriptions
-- [ ] สร้าง netlify.toml
-- [ ] สร้าง vercel.json
-- [ ] Push to GitHub repository
+- [x] ติดตั้ง @supabase/supabase-js
+- [x] สร้าง Supabase Schema SQL
+- [x] สร้าง Supabase Policies
+- [x] สร้าง Supabase helpers แทน tRPC
+- [ ] ปรับ Frontend ให้ใช้ Supabase (ใช้ hybrid approach แทน)
+- [ ] ลบ authentication checks (เก็บไว้สำหรับ admin)
+- [x] เพิ่ม Realtime subscriptions
+- [x] สร้าง netlify.toml
+- [x] สร้าง vercel.json
+- [x] Push to GitHub repository
