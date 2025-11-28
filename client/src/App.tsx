@@ -4,35 +4,43 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
+import Navbar from "./components/Navbar";
+import Dashboard from "./pages/Dashboard";
+import Parcels from "./pages/Parcels";
+import CreateShipment from "./pages/CreateShipment";
+import ShipmentQuote from "./pages/ShipmentQuote";
+import Projects from "./pages/Projects";
+import WeeklyPlan from "./pages/WeeklyPlan";
+import Settings from "./pages/Settings";
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
+      <Route path={"/"} component={Dashboard} />
+      <Route path={"/parcels"} component={Parcels} />
+      <Route path={"/create-shipment"} component={CreateShipment} />
+      <Route path={"/shipment-quote"} component={ShipmentQuote} />
+      <Route path={"/projects"} component={Projects} />
+      <Route path={"/weekly-plan"} component={WeeklyPlan} />
+      <Route path={"/settings"} component={Settings} />
       <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
-
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
+      <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster />
-          <Router />
+          <div className="min-h-screen bg-background">
+            <Navbar />
+            <main className="container py-6 overflow-y-auto">
+              <Router />
+            </main>
+          </div>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
