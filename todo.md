@@ -28,4 +28,8 @@
 - [x] ทดสอบ Thailand Post API Integration
 - [x] ทดสอบ Real-time Notifications
 - [x] ตรวจสอบ Responsive Design
-- [ ] สร้าง Checkpoint สำหรับ Deployment
+- [x] สร้าง Checkpoint สำหรับ Deployment
+
+## Bug Fixes
+- [x] แก้ไข Invalid time value error ใน Parcels page
+- [x] แก้ไข nested button error ใน ParcelCard component

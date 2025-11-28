@@ -33,8 +33,9 @@ export default function ParcelCard({
   return (
     <Card className="bg-white border-gray-300">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <CollapsibleTrigger className="w-full">
-          <CardContent className="p-4">
+        <CollapsibleTrigger asChild>
+          <div className="w-full cursor-pointer">
+            <CardContent className="p-4">
             <div className="flex items-start justify-between gap-4">
               {/* Left side */}
               <div className="flex-1 text-left">
@@ -113,7 +114,8 @@ export default function ParcelCard({
                 </DropdownMenu>
               </div>
             </div>
-          </CardContent>
+            </CardContent>
+          </div>
         </CollapsibleTrigger>
 
         {/* Timeline Detail */}

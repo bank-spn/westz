@@ -76,9 +76,21 @@ export default function Parcels() {
     e.preventDefault();
 
     try {
+      // Validate and convert date
+      let dateSent: Date | undefined = undefined;
+      if (formData.dateSent) {
+        const dateValue = new Date(formData.dateSent);
+        if (!isNaN(dateValue.getTime())) {
+          dateSent = dateValue;
+        }
+      }
+
       const data = {
-        ...formData,
-        dateSent: formData.dateSent ? new Date(formData.dateSent) : undefined,
+        trackingNumber: formData.trackingNumber,
+        destination: formData.destination || undefined,
+        recipientName: formData.recipientName || undefined,
+        note: formData.note || undefined,
+        dateSent,
       };
 
       if (editingParcel) {
