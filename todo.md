@@ -33,3 +33,6 @@
 ## Bug Fixes
 - [x] แก้ไข Invalid time value error ใน Parcels page
 - [x] แก้ไข nested button error ใน ParcelCard component
+
+## Feature Improvements
+- [x] ปรับปรุง ParcelCard ให้แสดงประวัติการจัดส่งอัตโนมัติเมื่อคลิก

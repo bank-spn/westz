@@ -32,10 +32,6 @@ export default function Parcels() {
   const updateMutation = trpc.parcels.update.useMutation();
   const deleteMutation = trpc.parcels.delete.useMutation();
   const refreshStatusMutation = trpc.parcels.refreshStatus.useMutation();
-  const { data: trackingHistoryData } = trpc.parcels.getTrackingHistory.useQuery(
-    { trackingNumber: editingParcel?.trackingNumber || "" },
-    { enabled: !!editingParcel }
-  );
 
   const handleOpenDialog = (parcel?: Parcel) => {
     if (parcel) {

@@ -100,7 +100,11 @@ export default function Dashboard() {
         ) : (
           <div className="space-y-3">
             {recentParcels.map((parcel) => (
-              <ParcelCard key={parcel.id} parcel={parcel} onRefresh={handleRefresh} />
+              <ParcelCard 
+                key={parcel.id} 
+                parcel={parcel} 
+                onRefresh={handleRefresh}
+              />
             ))}
           </div>
         )}

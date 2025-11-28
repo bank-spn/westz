@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Parcel } from "../../../drizzle/schema";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MoreVertical, RefreshCw, Pencil, Trash2 } from "lucide-react";
+import { MoreVertical, RefreshCw, Pencil, Trash2, Loader2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,13 +12,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { format } from "date-fns";
+import { trpc } from "@/lib/trpc";
 
 interface ParcelCardProps {
   parcel: Parcel;
   onRefresh?: (id: number) => void;
   onEdit?: (parcel: Parcel) => void;
   onDelete?: (id: number) => void;
-  trackingHistory?: any[];
 }
 
 export default function ParcelCard({
@@ -26,13 +26,29 @@ export default function ParcelCard({
   onRefresh,
   onEdit,
   onDelete,
-  trackingHistory = [],
 }: ParcelCardProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [shouldFetch, setShouldFetch] = useState(false);
+
+  const { data: trackingHistory, isLoading: isLoadingHistory } = trpc.parcels.getTrackingHistory.useQuery(
+    { trackingNumber: parcel.trackingNumber },
+    { enabled: shouldFetch }
+  );
+
+  // Fetch tracking history when card is opened
+  useEffect(() => {
+    if (isOpen && !shouldFetch) {
+      setShouldFetch(true);
+    }
+  }, [isOpen, shouldFetch]);
+
+  const handleToggle = (open: boolean) => {
+    setIsOpen(open);
+  };
 
   return (
     <Card className="bg-white border-gray-300">
-      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <Collapsible open={isOpen} onOpenChange={handleToggle}>
         <CollapsibleTrigger asChild>
           <div className="w-full cursor-pointer">
             <CardContent className="p-4">
@@ -119,11 +135,17 @@ export default function ParcelCard({
         </CollapsibleTrigger>
 
         {/* Timeline Detail */}
-        {trackingHistory.length > 0 && (
-          <CollapsibleContent>
-            <CardContent className="pt-0 pb-4 px-4 border-t border-gray-200">
-              <div className="mt-4">
-                <h4 className="font-semibold mb-3">Tracking Timeline</h4>
+        <CollapsibleContent>
+          <CardContent className="pt-0 pb-4 px-4 border-t border-gray-200">
+            <div className="mt-4">
+              <h4 className="font-semibold mb-3">Tracking Timeline</h4>
+              
+              {isLoadingHistory ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                  <span className="ml-2 text-gray-600">Loading tracking history...</span>
+                </div>
+              ) : trackingHistory && trackingHistory.length > 0 ? (
                 <div className="space-y-3">
                   {trackingHistory
                     .slice()
@@ -154,10 +176,14 @@ export default function ParcelCard({
                       );
                     })}
                 </div>
-              </div>
-            </CardContent>
-          </CollapsibleContent>
-        )}
+              ) : (
+                <div className="text-sm text-gray-500 py-4">
+                  No tracking history available. Click "Refresh Status" to fetch the latest data.
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </CollapsibleContent>
       </Collapsible>
     </Card>
   );
