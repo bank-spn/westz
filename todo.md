@@ -66,3 +66,6 @@
 - [x] แก้ไข Invalid time value error
 - [x] ลบ Supabase code ที่ไม่ได้ใช้ออกจาก Dashboard
 - [ ] แก้ไข Thailand Post API 403 error (ต้องอัปเดต token ใน Settings)
+
+## Bug Fixes (Round 3)
+- [x] แก้ไข Invalid time value error ใน ParcelCard component

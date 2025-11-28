@@ -70,11 +70,14 @@ export default function ParcelCard({
                     <span className="font-medium">Location:</span> {parcel.currentLocation}
                   </div>
                 )}
-                {parcel.lastUpdated && (
-                  <div className="text-xs text-gray-500">
-                    Last update: {format(new Date(parcel.lastUpdated), "dd/MM/yyyy | HH:mm")}
-                  </div>
-                )}
+                {parcel.lastUpdated && (() => {
+                  const date = new Date(parcel.lastUpdated);
+                  return !isNaN(date.getTime()) ? (
+                    <div className="text-xs text-gray-500">
+                      Last update: {format(date, "dd/MM/yyyy | HH:mm")}
+                    </div>
+                  ) : null;
+                })()}
               </div>
 
               {/* Right side */}
@@ -167,7 +170,10 @@ export default function ParcelCard({
                           <div className="text-sm font-medium">{item.status_description}</div>
                           <div className="text-xs text-gray-600">{item.location}</div>
                           <div className="text-xs text-gray-500 mt-1">
-                            {format(new Date(item.status_date), "dd/MM/yyyy HH:mm")}
+                            {(() => {
+                              const date = new Date(item.status_date);
+                              return !isNaN(date.getTime()) ? format(date, "dd/MM/yyyy HH:mm") : 'Invalid date';
+                            })()}
                           </div>
                           {item.status_detail && (
                             <div className="text-xs text-gray-600 mt-1">{item.status_detail}</div>
